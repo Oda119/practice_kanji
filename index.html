@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0">
+
+    <title>漢字練習~1年生向け~</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* CSSの設定 */
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="loading-inner">
+            <div class="head">
+                <h1>まちがいやすい、</h1><br>
+                <h1>「かんじ」のれんしゅうをするよ</h1><br>
+                <h1>マウスのひだりクリックをつかうよ</h1><br>
+            </div>
+            <div>
+                <h2 id="teachName">↓なまえをおしえてね↓</h2>
+                <input class="textbox" type="text" id="registName" placeholder="なまえ" title="registName">
+                <button id="registButton">
+                    けってい
+                </button>
+            </div>
+            <div class="rename">
+                <select type="text" id="selectname" class="selectbox" title="restartname" value="なまえ"></select>
+                <button id="select_name">
+                    もういちど
+                </button>
+                <button id="delete_name">
+                    ばいばい
+                </button>
+            </div>
+            <div id="load1">
+                <img src="img/chara.png" alt="">
+                <img src="img/chara1.png" alt="">
+                <p>
+                    <span id="Loading">Loading.....</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- ページの中身を定義 -->
+    <script>
+        //名前を入力したときの処理
+        const registButton = document.getElementById("registButton");
+        const samename = document.getElementById("sameName");
+        const teachName = document.getElementById("teachName");
+        registButton.addEventListener("click", function () {
+            animation();
+            const name = document.getElementById("registName").value;
+            //入力欄に文字が入っていない時
+            if (name == "") {
+                teachName.innerHTML = "なまえをいれてね！";
+                nameExist = true;
+            } else {
+                let nameExist = false;
+                for (let i = 0; i < localStorage.length; i++) {
+                    const Name = localStorage.key(i);
+                    //入力欄の名前がすでに使用されているとき
+                    if (Name == name) {
+                        teachName.innerHTML = "おなじなまえがあるよ";
+                        nameExist = true;
+                        break;
+                    }
+                }
+                //入力欄の名前がないときにチュートリアルから開始
+                if (!nameExist) {
+                    const Data = {
+                        "a": 0, "b": 0, "c": 0, "d": 0, "e": 0,
+                        "f": 0, "g": 0, "h": 0, "i": 0, "j": 0,
+                        "k": 0, "o": 0,
+                        "chutorial": 0
+                    };
+                    localStorage.setItem(name, JSON.stringify(Data));
+                    const reName = "chutorial.html?oda=" + encodeURIComponent(name);
+                    window.location.href = reName;
+                }
+            }
+        });
+
+        //アニメーション
+        function animation() {
+            const load1 = document.getElementById("load1");
+            const loadingSpan = document.getElementById("Loading");
+            load1.classList.add("loading-animation");
+        };
+
+        //// プルダウンリスト表示
+        const key = Object.keys(localStorage);
+        const select_name = document.getElementById("selectname");
+        key.forEach(function (key) {
+            const option = document.createElement("option");
+            option.text = key;
+            select_name.add(option);
+        });
+
+        // プルダウンリストで名前が変更された時の処理
+        const deleteName = document.getElementById("delete_name");
+        deleteName.addEventListener("click", function () {
+            const delete_name = document.getElementById("selectname");
+            const selectedName = delete_name.value;
+            localStorage.removeItem(selectedName);
+            window.location.reload();
+        });
+
+        //「リトライ」ボタン部分を押した時の処理
+        const chutorialValue=0;
+        const restartName = document.getElementById("select_name");
+        restartName.addEventListener("click", function () {
+            const inputName = document.getElementById("selectname");
+            const Name = inputName.value;
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key == Name) {
+                    const Data = JSON.parse(localStorage.getItem(key));
+                    if (Data.chutorial == chutorialValue) {
+                        const reName = "chutorial.html?oda=" + encodeURIComponent(Name);
+                        window.location.href = reName;
+                    } else {
+                        const Data = localStorage.getItem(Name);
+                        const reName = "sub_page.html?oda=" + encodeURIComponent(Name);
+                        window.location.href = reName;
+                    }
+
+                }
+            };
+        });
+    </script>
+</body>
+
+</html>

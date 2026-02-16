@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0">
+
+    <title>chutorial</title>
+    <link rel="stylesheet" href="css/chutorial.css">
+    <style>
+        /* CSSの設定 */
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="loading-inner">
+            <div id="a" class="a">
+                
+                <h1 class="fadein txt01" id="id1">チュートリアルを行うよ!</h1>
+                <h1 class="fadein txt02" id="id2">マウスのひだりクリックをおすと、せんがかけるよ</h1>
+                <h1 class="fadein txt03" id="id3">マウスをはなすと、かくのをやめるよ</h1>
+                <h1 class="fadein txt03" id="id3">なれるまで、やってみよう!</h1>
+                <canvas class="fadein txt03" id="canvas" width="400px" height="400px"
+                    style="border: solid 1px #000000;"></canvas>
+                <div>
+                    <button class="fadein txt03" id="clear">けしごむ</button>
+                    <button class="fadein txt03" id="finish">かんせい</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    </div>
+    <!-- ページの中身を定義 -->
+    <script>
+        const canvas1 = document.getElementById("canvas");
+        const ctx = canvas1.getContext("2d");
+        // Javascriptのプログラム
+        //色の変更
+        const color1 = "red";
+        //クリックフラッグ
+        var clickFlg = false;
+        //canvasへの文字を背景で表示
+        const char = new Image();
+        char.src = "img/a.png";
+        char.onload = () => {
+            ctx.drawImage(char, 0, 0, 400, 400);
+        };
+
+        //座標の情報を残す
+        let startPoint = {};
+        let time = 0;
+
+        //マウスでのお絵描き部分
+        canvas1.addEventListener("mousedown", draw_start, false);
+        canvas1.addEventListener("mousemove", draw_move, false);
+        canvas1.addEventListener("mouseup", draw_end, false);
+        function draw_start(e) {
+            clickFlg = true;
+            e.preventDefault();
+            ctx.beginPath();
+            ctx.lineWidth = 13;
+            ctx.strokeStyle = color1;
+            ctx.lineCap = "round";
+            ctx.moveTo(startPoint.x, startPoint.y);
+            ctx.stroke();
+            time++;
+        }
+        function draw_move(e) {
+            if (clickFlg == false) return false;
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+            time++;
+        }
+        function draw_end(e) {
+            clickFlg = false;
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+            time++;
+        }
+
+        const clear = document.getElementById("clear");
+        clear.addEventListener("click", allClear, false);
+        function allClear() {
+            ctx.clearRect(0, 0, 400, 400);
+            ctx.drawImage(char, 0, 0, 400, 400);
+            lineID = 0;
+            count = 0;
+            lineCtx = {};
+            count = 0;
+            times = 0;
+
+        };
+
+
+        const finish = document.getElementById("finish");
+        const chutorialAcchive=1;
+        finish.addEventListener("click", finished, false);
+        function finished() {
+            setTimeout(function () {
+                const a = document.getElementById("a");
+                // テキストを書き換える
+                const url = new URLSearchParams(window.location.search);
+                const receivedODA = url.get('oda');
+                const Data = JSON.parse(localStorage.getItem(receivedODA));
+                Data.chutorial = chutorialAcchive;
+                localStorage.setItem(receivedODA, JSON.stringify(Data));
+                a.innerHTML = "チュートリアル　たっせい！！！";
+                a.style.fontSize = "24px";
+                a.style.fontWeight = "bold";
+                setTimeout(function () {
+                    a.innerHTML = "それじゃあ、はじめよう";
+                }, 2000)
+
+                // 2秒後にページを移動する
+                setTimeout(function () {
+                    const Data = localStorage.getItem(receivedODA);
+                    const reName = "sub_page.html?oda=" + encodeURIComponent(receivedODA);
+                    window.location.href = reName;
+
+                }, 5000);
+            },);
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>sub_page</title>
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0">
+    <link rel="stylesheet" href="css/sub_page.css">
+    <style>
+
+    </style>
+
+<body>
+
+    <div class="wrap">
+
+        <div class="c">
+            <div>
+                <h1>まちがいやすい かんじ</h1>
+                <h2>「 <span id="loginName"> </span> 」君だね、よろしく！！！</h2>
+                <h2>したの、アイコンをクリックしよう</h2>
+            </div>
+            <div>
+                <h1>いちねんせい</h1>
+            </div>
+
+
+            <div class="img_wrap">
+                <br>
+                <img src="img/first/migi_1.png" id="a" onclick="location.href='a.html'" alt="">
+                <img src="img/first/nen_1.png" id="b" onclick="location.href='b.html'" alt="">
+                <img src="img/first/otoko_1.png" id="c" onclick="location.href='c.html'" alt="">
+                <img src="img/first/ta_1.png" id="d" onclick="location.href='d.html'" alt="">
+
+            </div>
+            <br>
+            <div class="img_wrap">
+                <br>
+                <img src="img/second/go_1.png" id="f" onclick="location.href='f.html'" alt="">
+                <img src="img/second/hidari_1.png" id="g" onclick="location.href='g.html'" alt="">
+                <img src="img/second/inu_1.png" id="h" onclick="location.href='h.html'" alt="">
+                <img src="img/second/mi_1.png" id="i" onclick="location.href='i.html'" alt="">
+
+            </div>
+            <br>
+            <div class="img_wrap">
+                <br>
+                <img src="img/third/ito_1.png" id="k" onclick="location.href='k.html'" alt="">
+                <img src="img/third/yon_1.png" id="o" onclick="location.href='o.html'" alt="">
+                <img src="img/second/tuki_1.png" id="j" onclick="location.href='j.html'" alt="">
+                <img src="img/first/musi_1.png" id="e" onclick="location.href='e.html'" alt="">
+            </div>
+
+            <div>
+                <button onclick="location.href='index.html'" alt="">まえにもどる</button>
+            </div>
+
+
+
+            <br>
+
+        </div>
+
+    </div>
+
+    <script>
+        //home.htmlにて選択された名前でプレイする部分
+        const urlParams = new URLSearchParams(window.location.search);
+        const receivedODA = urlParams.get('oda');
+        const keyName = receivedODA;
+        const logName = document.getElementById("loginName");
+        logName.innerHTML = keyName;
+        //１段目
+        const buttonA = document.getElementById("a");
+        buttonA.addEventListener("click", function () {
+            const Name = "a.html?oda=" + encodeURIComponent(keyName);
+            window.location.href = Name;
+        }, false);
+
+        const buttonB = document.getElementById("b");
+        buttonB.addEventListener("click", function () {
+            const Name = "b.html?oda=" + encodeURIComponent(keyName);
+            window.location.href = Name;
+        }, false);
+        const buttonC = document.getElementById("c");
+        buttonC.addEventListener("click", function () {
+            const Name = "c.html?oda=" + encodeURIComponent(keyName);
+            window.location.href = Name;
+        }, false);
+        const buttonD = document.getElementById("d");
+        buttonD.addEventListener("click", function () {
+            const Name = "d.html?oda=" + encodeURIComponent(keyName);
+            window.location.href = Name;
+        }, false);
+
+        const buttonE = document.getElementById("e");
+        buttonE.addEventListener("click", function () {
+            const Name = "e.html?oda=" + encodeURIComponent(keyName);
+            window.location.href = Name;
+        }, false);
+
+        //2段目
+        const buttonF = document.getElementById("f");
+        buttonF.addEventListener("click", function () {
+            const Name = "f.html?oda=" + encodeURIComponent(keyName);
+            window.location.href = Name;
+        }, false);
+        const buttonG = document.getElementById("g");
+        buttonG.addEventListener("click", function () {
+            const Name = "g.html?oda=" + encodeURIComponent(keyName);
+            window.location.href = Name;
+        }, false);
+        const buttonH = document.getElementById("h");
+        buttonH.addEventListener("click", function () {
+            const Name = "h.html?oda=" + encodeURIComponent(keyName);
+            window.location.href = Name;
+        }, false);
+        const buttonI = document.getElementById("i");
+        buttonI.addEventListener("click", function () {
+            const Name = "i.html?oda=" + encodeURIComponent(keyName);
+            window.location.href = Name;
+        }, false);
+        const buttonJ = document.getElementById("j");
+        buttonJ.addEventListener("click", function () {
+            const Name = "j.html?oda=" + encodeURIComponent(keyName);
+            window.location.href = Name;
+        }, false);
+
+        //3段目
+        const buttonK = document.getElementById("k");
+        buttonK.addEventListener("click", function () {
+            const Name = "k.html?oda=" + encodeURIComponent(keyName);
+            window.location.href = Name;
+        }, false);
+
+        const buttonO = document.getElementById("o");
+        buttonO.addEventListener("click", function () {
+            const Name = "o.html?oda=" + encodeURIComponent(keyName);
+            window.location.href = Name;
+        }, false);
+
+
+
+
+        //あが正解したらボタンの色を変更する・localstrageからのデータ取得
+        const url = new URLSearchParams(window.location.search);
+        const received = url.get('oda');
+        const name = received;
+        const storageData = JSON.parse(localStorage.getItem(name));
+        const aValue = storageData.a;
+        const bValue = storageData.b;
+        const cValue = storageData.c;
+        const dValue = storageData.d;
+        const eValue = storageData.e;
+        const fValue = storageData.f;
+        const gValue = storageData.g;
+        const hValue = storageData.h;
+        const iValue = storageData.i;
+        const jValue = storageData.j;
+        const kValue = storageData.k;
+        const oValue = storageData.o;
+
+        const aWriteOrder =5;
+        const bWriteOrder =6;
+        const cWriteOrder =7;
+        const dWriteOrder =5;
+        const eWriteOrder =6;
+        const fWriteOrder =4;
+        const gWriteOrder =5; 
+        const hWriteOrder =4;
+        const iWriteOrder =7;
+        const jWriteOrder =4;
+        const kWriteOrder =6;
+        const oWriteOrder =5;
+
+        const aTotalOrder=aWriteOrder*3;
+        const bTotalOrder=bWriteOrder*3;
+        const cTotalOrder=cWriteOrder*3;
+        const dTotalOrder=dWriteOrder*3;
+        const eTotalOrder=eWriteOrder*3;
+        const fTotalOrder=fWriteOrder*3;
+        const gTotalOrder=gWriteOrder*3;
+        const hTotalOrder=hWriteOrder*3;
+        const iTotalOrder=iWriteOrder*3;
+        const jTotalOrder=jWriteOrder*3;
+        const kTotalOrder=kWriteOrder*3;
+        const oTotalOrder=oWriteOrder*3;
+
+        if (aValue === aTotalOrder) {
+            const button = document.getElementById("a");
+            button.style.backgroundColor = "white";
+            button.style.filter = "none";
+        }
+        if (bValue === bTotalOrder) {
+            const button = document.getElementById("b");
+            button.style.backgroundColor = "white";
+            button.style.filter = "none";
+        }
+        if (cValue ===cTotalOrder) {
+            const button = document.getElementById("c");
+            button.style.backgroundColor = "white";
+            button.style.filter = "none";
+        }
+        if (dValue ===dTotalOrder) {
+            const button = document.getElementById("d");
+            button.style.backgroundColor = "white";
+            button.style.filter = "none";
+        }
+        if (eValue ===eTotalOrder) {
+            const button = document.getElementById("e");
+            button.style.backgroundColor = "white";
+            button.style.filter = "none";
+        }
+
+        if (fValue ===fTotalOrder) {
+            const button = document.getElementById("f");
+            button.style.backgroundColor = "white";
+            button.style.filter = "none";
+        }
+        if (gValue ===gTotalOrder) {
+            const button = document.getElementById("g");
+            button.style.backgroundColor = "white";
+            button.style.filter = "none";
+        }
+        if (hValue ===hTotalOrder) {
+            const button = document.getElementById("h");
+            button.style.backgroundColor = "white";
+            button.style.filter = "none";
+        }
+        if (iValue ===iTotalOrder) {
+            const button = document.getElementById("i");
+            button.style.backgroundColor = "white";
+            button.style.filter = "none";
+        }
+        if (jValue ===jTotalOrder) {
+            const button = document.getElementById("j");
+            button.style.backgroundColor = "white";
+            button.style.filter = "none";
+        }
+
+        if (kValue ===kTotalOrder) {
+            const button = document.getElementById("k");
+            button.style.backgroundColor = "white";
+            button.style.filter = "none";
+        }
+
+        if (oValue ===oTotalOrder) {
+            const button = document.getElementById("o");
+            button.style.backgroundColor = "white";
+            button.style.filter = "none";
+        }
+
+
+        else {
+            //
+        }
+
+    </script>
+</body>
+</head>
+
+<body>
+
+
+
+</body>
+
+</html>

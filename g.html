@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sub_page</title>
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0">
+    <link rel="stylesheet" href="css/a.css">
+    <title>左</title>
+    <style>
+    </style>
+
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="loading-inner" id="alltime">
+            <div class="alltime">
+                <h1>
+                    <h1>ただしいじゅんばんで、３かいかいてね!!</h1>
+                    <h2>かきおわったら、「 ◯ ✕ 」のボタンをおそう</h2>
+                    <h2><span id="result">1 かいめ</span></h2>
+                </h1>
+            </div>
+
+            <div>
+                <canvas id="canvas" width="400px" height="400px" style="border: solid 1px #222;"></canvas>
+            </div>
+
+            <div class="threeButton">
+                <button id="writeOrder"> ◯ ✕ </button>
+                <button id="clear">けしごむ</button>
+                <button id="tips"> ! ヒント ! </button>
+                <button onclick="location.href='index.html'">←←はじめにもどる</button>
+                <button id="backPage" onclick="location.href='sub_page.html'">←ひとつまえにもどる</button>
+
+            </div>
+            <p><img id="face" class="flower" src="img/charactar/png7.png" alt="">
+        </div>
+    </div>
+
+
+    <script>
+        //定数の定義
+        const totalOrder = 5;
+        const threeRights = totalOrder * 3;
+        //値を再代入
+        let count = 5;
+        //canvas上での各種設定
+        const lineWidth = 10;
+        const blurPoint = 10;
+        const color1 = "black";
+        //正しい座標位置と書かれた座標位置を比較したときの許容距離
+        const commonSense = 35
+        //canvas上での正しい座標位置
+        const rightPosition = [
+            { ID: 0, x: 80, y: 135 },
+            { ID: 1, x: 175, y: 55 },
+            { ID: 2, x: 160, y: 225 },
+            { ID: 3, x: 220, y: 235 },
+            { ID: 4, x: 135, y: 330 }
+        ];
+        //canvas上への座標情報、書くたびに座標値を再代入するため「let」で定義
+        let startPoint = {};
+        let totalPointData = [];
+        let lineID = 0;
+        //localStorageに正解した回数を再代入するため「let」で定義
+        let right_time = 0;
+
+        //マウスでお絵描きさせるcanvas
+        const canvas1 = document.getElementById("canvas");
+        const ctx = canvas1.getContext("2d");
+
+        //クリックフラッグ
+        let clickFlg = false;
+
+        //canvasへの文字を背景で表示
+        const char = new Image();
+        char.src = "img/second/hidari_1.png";
+        char.onload = () => {
+            ctx.drawImage(char, 0, 0, 400, 400);
+        };
+
+        //canvas上への操作
+        canvas1.addEventListener("mousedown", draw_start, false);
+        canvas1.addEventListener("mousemove", draw_move, false);
+        canvas1.addEventListener("mouseup", draw_end, false);
+        function draw_start(e) {
+            clickFlg = true;
+            e.preventDefault();
+            ctx.beginPath();
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = color1;
+            ctx.lineCap = "round";
+            startPoint = { ID: lineID, x: e.offsetX, y: e.offsetY }
+            ctx.moveTo(startPoint.x, startPoint.y);
+            totalPointData.push(startPoint);
+            lastStartPoint = startPoint;
+            console.log(totalPointData)
+            lineID++;
+            ctx.stroke();
+        };
+        function draw_move(e) {
+            if (clickFlg == false) return false;
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        };
+        function draw_end(e) {
+            clickFlg = false;
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        };
+
+
+
+        //書いた順番に関する正誤表示
+        const result = document.getElementById("result");
+        const writeOrder = document.getElementById("writeOrder");
+        writeOrder.addEventListener("click", stroke_order, false);
+
+        function stroke_order() {
+            const Index = totalPointData;
+            const r = rightPosition;
+            totalPointData = [];
+            const order = [];
+            if (r.length == Index.length) {
+                for (let i = 0; i < Index.length; i++) {
+                    if (Index[i].ID === r[i].ID) {
+                        const distance = Math.sqrt(Math.pow((Index[i].x - r[i].x), 2) + Math.pow((r[i].y - Index[i].y), 2));
+                        if (distance < commonSense) {
+                            right_time++;
+                            
+                            right_times(right_time);
+                        }
+                        else {
+                            differ();
+                            break;
+                        }
+                    };
+                };
+            };
+            if (r.length != Index.length) {
+                const order = [];
+                differ();
+                console.log("画数が少ない");
+            }
+
+            function differ() {
+                result.innerHTML = "ただしくないよ  やりなおし";
+                allClear();
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1000)
+            };
+        };
+
+        //あのlocalStorage
+        let blur = blurPoint;
+        function right_times(right_time) {
+            
+            const url = new URLSearchParams(window.location.search);
+            const receivedODA = url.get('oda');
+            const name = receivedODA;
+            const storageData = JSON.parse(localStorage.getItem(name));
+            const flower = document.querySelector(".flower");
+            storageData.g = right_time++;
+            localStorage.setItem(name, JSON.stringify(storageData));
+
+            if (storageData.g >= threeRights) {
+                const time = document.getElementById("result");
+                time.innerHTML = "じょうずにかけました";
+                time.style.fontSize = "24px";
+                time.style.fontWeight = "bold";
+                flower.style.filter = "None";
+                setTimeout(function () {
+                    const Name = "sub_page.html?oda=" + encodeURIComponent(name);
+                    window.location.href = Name;
+                }, 2000)
+            }
+
+            else if (storageData.g < threeRights) {
+                const time1 = document.getElementById("result");
+                if (blur > 0) {
+                    blur -= 3;
+                    flower.style.filter = `blur(${blur}px)`;
+                }
+                ctx.clearRect(0, 0, 400, 400);
+                ctx.drawImage(char, 0, 0, 400, 400);
+                lineID = 0;
+                totalPointData = [];
+                
+                timecount();
+
+            }
+        };
+
+
+
+        function timecount() {
+            count++;
+            result.innerHTML = Math.round(count / totalOrder) + " かいめ";
+            
+        };
+
+
+
+
+        //ページを戻る
+        const backPage = document.getElementById("backPage");
+        backPage.addEventListener("click", function () {
+            const url = new URLSearchParams(window.location.search);
+            const receivedODA = url.get('oda');
+            const name = receivedODA;
+            const Name = "sub_page.html?oda=" + encodeURIComponent(name);
+            window.location.href = Name;
+        });
+
+
+        //ヒントボタンでの処理
+        const tips = document.getElementById("tips");
+        tips.addEventListener("click", function () {
+            const char = new Image();
+            totalPointData = [];
+            lineID = 0;
+            char.src = "img/second/hidari.png";
+            char.onload = () => {
+                ctx.clearRect(0, 0, 400, 400);
+                ctx.drawImage(char, 0, 0, 400, 400);
+            };
+        }, false);
+
+        //「クリア」ボタンにてcanvasで書いた線を消す部分と情報の初期化
+        const clear = document.getElementById("clear");
+        clear.addEventListener("click", allClear, false);
+        function allClear() {
+            ctx.clearRect(0, 0, 400, 400);
+            ctx.drawImage(char, 0, 0, 400, 400);
+            lineID = 0;
+            totalPointData = [];
+        };
+
+
+    </script>
+
+
+</body>
+
+</html>
