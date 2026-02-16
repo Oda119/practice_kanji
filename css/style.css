@@ -1,0 +1,197 @@
+html,
+body {
+    margin: 0 ;
+    padding: 0 ;
+    font-family: sans-serif;
+}
+
+/* CSS一覧
+[.wrap] class定義
+[.loading-inner] 一番外側のclass
+[.loading-inner img]loading-inner内にあるimgタグ
+[.loading-inner span::before]空の要素に対する扱い
+*/
+
+
+
+.wrap {
+    width: 1800;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fef7df;
+}
+
+.textbox {
+    padding: 1em 1em;
+    margin: 1em 0;
+    background: #ffffff;
+    box-shadow: 0px 0px 0px 10px #fef7df;
+    border: dashed 2px rgb(28, 27, 21);
+    border-radius: 20%;
+    text-align: center;
+    justify-content: center;
+}
+
+.name {
+    content: "";
+    position: relative;
+    background-color: #fef7df;
+    top: 10;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: block;
+
+}
+
+.loading-inner button {
+    width: 100px;
+    padding: 1em 1em;
+    font-size: 13px;
+    font-weight: bold;
+    background: #fbdb73;
+    border-radius: 20%;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    justify-content: center;
+}
+
+.loading-inner button:active {
+    box-shadow: none;
+    transform: translateY(5px);
+}
+
+.loading-inner {
+    text-align: center;
+}
+
+/*最初の注意書きのコメントに対するアニメーション*/
+.loading-inner head {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    justify-content: center;
+}
+
+.loading-inner head.coment::before {
+    content: "";
+    position: absolute;
+    background-color: #fef7df;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: block;
+    animation: coment_anime 4s;
+}
+
+.loading-inner img {
+    width: 160px;
+    animation: loading_anime 1s infinite;
+
+}
+
+.loading-inner p {
+    letter-spacing: 0.15em;
+    font-size: 13px;
+    font-weight: bold;
+    color: #645f53;
+}
+
+.loading-inner span {
+    display: inline-block;
+    position: relative;
+}
+
+.loading-inner span::before {
+    content: "";
+    position: absolute;
+    background-color: #fef7df;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: block;
+    animation: text_anime 4s infinite;
+}
+
+.selectbox {
+    padding: 1em 1em;
+    margin: 1em 0;
+    background: #ffffff;
+    box-shadow: 0px 0px 0px 10px #fef7df;
+    border: dashed 2px rgb(28, 27, 21);
+    border-radius: 20%;
+    text-align: center;
+    justify-content: center;
+}
+
+.rename button {
+    width: 100px;
+    padding: 1em 1em;
+    font-size: 13px;
+    font-weight: bold;
+    background: #fbdb73;
+    border-radius: 20%;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    justify-content: center;
+}
+
+.rename button:active {
+    box-shadow: none;
+    transform: translateY(5px);
+}
+
+
+@keyframes coment_anime {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes loading_anime {
+    0% {
+        transform: scale(1.0, 1.0) translate3d(0, 0, 0);
+    }
+
+    30% {
+        transform: scale(1.0, 1.06) translate3d(-3%, -2%, 0) skew(4deg, 0deg);
+    }
+
+    45% {
+        transform: scale(1.0, 0.97) translate3d(-1%, -1%, 0) skew(1deg, 0deg);
+    }
+
+    75% {
+        transform: scale(1.0, 1.06) translate3d(3%, -2%, 0) skew(-4deg, 0deg);
+    }
+
+    90% {
+        transform: scale(1.0, 0.97) translate3d(1%, 1%, 0) skew(-1deg, 0deg);
+    }
+
+    100% {
+        transform: scale(1.0, 1.0) translate3d(0, 0, );
+    }
+
+}
+
+@keyframes text_anime {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}

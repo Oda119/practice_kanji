@@ -1,0 +1,109 @@
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.wrap {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    
+    
+    background-color: #fef7df;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-inner {
+    text-align: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+
+.loading-inner h1 {
+    
+    font-size: 25px;
+    margin: 10px 0 42px;
+}
+
+.loading-inner button {
+    width: 100px;
+    padding: 1em 1em;
+    font-size: 13px;
+    font-weight: bold;
+    background: #ffffff;
+    border: dashed 2px rgb(7, 7, 5);
+    border-radius: 20%;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    justify-content: center;
+}
+
+.loading-inner button:active {
+    box-shadow: none;
+    transform: translateY(5px);
+}
+
+
+
+.next {
+    opacity: 0;
+    animation: fadein 6s ease forwards;
+}
+
+
+.fadein {
+    opacity: 0;
+    animation: fadein 6s ease forwards;
+}
+
+
+.fadein_next {
+    opacity: 0;
+    animation: fadein 6s ease forwards;
+}
+
+
+.a {
+    font-size: 25px;
+    margin: 10px  42px;
+    
+}
+
+
+
+
+
+@keyframes fadein {
+    100% {
+        opacity: 1;
+    }
+}
+
+/*以下遅延の指定*/
+.txt01 {
+    animation-delay: 1s;
+}
+
+.txt02 {
+    animation-delay: 3s;
+}
+
+.txt03 {
+    animation-delay: 5s;
+}
+
+.txt04 {
+    animation-delay: 6s;
+}
+
+@keyframes next {
+    100% {
+        opacity: 1;
+    }
+}
